@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMA CGM | Official International Logistics Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --cma-blue: #002c5f;
+            --cma-red: #e21e26;
+            --cma-dark: #001a39;
+            --cma-light: #f1f5f9;
+            --accent-gold: #b2945e;
+            --white: #ffffff;
+            --grey: #64748b;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --border-soft: #e2e8f0;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background: var(--cma-light); color: #1e293b; overflow-x: hidden; scroll-behavior: smooth; line-height: 1.6; }
+
+        nav {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 15px 5%; background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(15px);
+            position: sticky; top: 0; z-index: 1000; border-bottom: 2px solid var(--cma-blue);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        .logo { font-family: 'Montserrat'; font-weight: 900; font-size: 26px; color: var(--cma-blue); text-decoration: none; letter-spacing: -1px; }
+        .logo span { color: var(--cma-red); }
+        .nav-links { display: flex; align-items: center; }
+        .nav-links a { text-decoration: none; color: var(--cma-blue); margin-left: 20px; font-weight: 700; font-size: 11px; text-transform: uppercase; cursor: pointer; transition: 0.3s; }
+        .nav-links a:hover { color: var(--cma-red); }
+
+        .hero {
+            background: linear-gradient(rgba(0,44,95,0.85), rgba(0,26,57,0.95)), url('https://images.unsplash.com/photo-1578575437130-527eed3abbec?q=80&w=1600');
+            background-size: cover; background-attachment: fixed; background-position: center; height: 500px;
+            display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--white); text-align: center; padding: 20px;
+        }
+        .hero h1 { font-family: 'Montserrat'; font-size: clamp(32px, 9vw, 56px); margin-bottom: 15px; font-weight: 800; text-transform: uppercase; }
+        .hero p { font-size: 18px; opacity: 0.9; max-width: 750px; font-weight: 300; margin-bottom: 30px; }
+
+        .track-card {
+            background: var(--white); padding: 40px 30px; border-radius: 15px;
+            box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.3); width: 94%; max-width: 700px;
+            margin: -80px auto 60px; position: relative; z-index: 10; border-top: 8px solid var(--cma-blue);
+        }
+        .input-group { position: relative; display: flex; flex-direction: column; gap: 10px; }
+        .track-input { width: 100%; padding: 22px 25px; border: 2px solid #cbd5e1; font-size: 18px; border-radius: 10px; font-weight: 700; transition: 0.4s; color: var(--cma-blue); }
+        .track-input:focus { border-color: var(--cma-blue); box-shadow: 0 0 0 4px rgba(0,44,95,0.1); outline: none; }
+        .track-btn { width: 100%; background: var(--cma-blue); color: var(--white); border: none; padding: 20px; font-weight: 800; cursor: pointer; border-radius: 10px; text-transform: uppercase; letter-spacing: 2px; font-size: 16px; transition: 0.3s; }
+        .track-btn:hover { background: var(--cma-dark); transform: translateY(-3px); }
+
+        .page-view { display: none; padding: 50px 5%; animation: slideIn 0.6s cubic-bezier(0.23, 1, 0.32, 1); }
+        .active-view { display: block; }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(50px); } to { opacity: 1; transform: translateY(0); } }
+
+        .status-banner {
+            background: var(--white); border-radius: 15px; padding: 30px; margin-bottom: 30px;
+            border-left: 10px solid var(--cma-blue); display: flex; align-items: center; justify-content: space-between;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        }
+        .status-text h2 { font-size: 12px; text-transform: uppercase; color: var(--grey); letter-spacing: 1px; }
+        .status-text p { font-size: 24px; font-weight: 900; color: var(--cma-blue); margin-top: 5px; }
+        .badge-status { background: #e0f2fe; color: #0369a1; padding: 10px 20px; border-radius: 50px; font-weight: 800; font-size: 14px; border: 2px solid #bae6fd; }
+
+        .details-grid { display: grid; grid-template-columns: 1fr; gap: 25px; margin-bottom: 40px; }
+        .info-box { background: var(--white); border-radius: 15px; padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.03); border: 1px solid #edf2f7; }
+        .info-box h3 { font-size: 15px; text-transform: uppercase; color: var(--cma-red); margin-bottom: 20px; border-bottom: 2px solid #f1f5f9; padding-bottom: 10px; }
+        .info-box p { font-size: 16px; margin-bottom: 8px; display: flex; justify-content: space-between; }
+        .info-box b { color: var(--cma-blue); text-align: right; margin-left: 10px; }
+
+        .map-wrapper { height: 550px; width: 100%; border-radius: 20px; overflow: hidden; border: 5px solid white; box-shadow: 0 20px 40px rgba(0,0,0,0.1); margin-bottom: 40px; position: relative; }
+        .map-wrapper iframe { width: 100%; height: 100%; border: none; }
+        .map-overlay-info { position: absolute; top: 20px; left: 20px; background: rgba(0, 44, 95, 0.9); color: white; padding: 15px 25px; border-radius: 10px; font-size: 14px; z-index: 5; border-left: 5px solid var(--cma-red); }
+
+        .cargo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; padding: 0 5% 60px; }
+        .cargo-item { height: 250px; border-radius: 15px; overflow: hidden; position: relative; }
+        .cargo-item img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+        .cargo-overlay { position: absolute; bottom: 0; left: 0; width: 100%; padding: 20px; background: linear-gradient(transparent, rgba(0,0,0,0.8)); color: white; }
+
+        .timeline { position: relative; padding-left: 40px; margin: 40px 0; }
+        .timeline::before { content: ''; position: absolute; left: 10px; top: 0; height: 100%; width: 4px; background: #e2e8f0; border-radius: 2px; }
+        .step { position: relative; margin-bottom: 40px; }
+        .step::after { content: ''; position: absolute; left: -39px; top: 5px; width: 22px; height: 22px; background: var(--white); border: 5px solid var(--cma-blue); border-radius: 50%; z-index: 2; }
+        .step.active::after { background: var(--cma-red); border-color: var(--cma-red); }
+        .step-content { background: #fff; padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+
+        .stats-strip { display: flex; flex-wrap: wrap; background: var(--cma-blue); padding: 50px 5%; justify-content: space-around; gap: 30px; }
+        .stat-item { text-align: center; color: white; }
+        .stat-item h3 { font-size: 40px; font-family: 'Montserrat'; font-weight: 900; }
+        .stat-item p { font-size: 14px; opacity: 0.7; text-transform: uppercase; letter-spacing: 1px; }
+
+        .vessel-tracking-module { background: #001a39; padding: 80px 5%; color: white; }
+        .vessel-info { display: flex; align-items: center; gap: 40px; flex-wrap: wrap; }
+        .vessel-visual { flex: 1; min-width: 300px; height: 400px; background: url('https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?q=80&w=1000') center; background-size: cover; border-radius: 20px; border: 10px solid rgba(255,255,255,0.05); }
+
+        footer { background: #000a1a; color: #cbd5e1; padding: 80px 8% 40px; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 50px; }
+        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.05); margin-top: 60px; padding-top: 30px; text-align: center; font-size: 12px; }
+
+        @media (min-width: 992px) {
+            .details-grid { grid-template-columns: repeat(2, 1fr); }
+            .hero { height: 600px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="#" class="logo" onclick="location.reload()">CMA <span>CGM</span></a>
+        <div class="nav-links">
+            <a onclick="location.reload()"><i class="fa-solid fa-house"></i> Home</a>
+            <a onclick="window.scrollTo(0, 1500)"><i class="fa-solid fa-circle-info"></i> About</a>
+            <a href="#"><i class="fa-solid fa-headset"></i> Support</a>
+        </div>
+    </nav>
+
+    <div id="home" class="page-view active-view" style="padding:0">
+        <div class="hero">
+            <h1>Better Ways for Logistics</h1>
+            <p>Moving the future. Over 250 shipping routes and 750 offices worldwide ensuring the perfect transit of your cargo.</p>
+            <button class="track-btn" style="width:200px; background:var(--cma-red)" onclick="document.getElementById('trackingID').focus()">Track Now</button>
+        </div>
+
+        <div class="track-card">
+            <h2 style="font-family: Montserrat; font-size: 22px; text-align: center; color: var(--cma-blue); margin-bottom: 10px;">GLOBAL TRACKING PORTAL</h2>
+            <p style="text-align: center; color: var(--grey); font-size: 13px; margin-bottom: 25px;">Enter your shipment number (Bill of Lading / Air Waybill)</p>
+            <div class="input-group">
+                <input type="text" id="trackingID" class="track-input" placeholder="xxxxxxxx">
+                <button class="track-btn" onclick="checkTrack()">Verify Shipment Status</button>
+            </div>
+            <div style="margin-top: 20px; display: flex; justify-content: space-around; font-size: 11px; color: #94a3b8; font-weight: 700;">
+                <span><i class="fa-solid fa-lock"></i> SECURE ENCRYPTION</span>
+                <span><i class="fa-solid fa-bolt"></i> REAL-TIME UPDATES</span>
+                <span><i class="fa-solid fa-earth-americas"></i> 160+ COUNTRIES</span>
+            </div>
+        </div>
+
+        <div class="stats-strip">
+            <div class="stat-item"><h3>257</h3><p>Vessels</p></div>
+            <div class="stat-item"><h3>12M</h3><p>TEU Containers/Year</p></div>
+            <div class="stat-item"><h3>160</h3><p>Countries Covered</p></div>
+            <div class="stat-item"><h3>110k</h3><p>Global Employees</p></div>
+        </div>
+    </div>
+
+    <div id="tracking-result" class="page-view">
+        <div class="status-banner">
+            <div class="status-text">
+                <h2>Tracking Reference: <b id="displayID">CMA789PH</b></h2>
+                <p>Status: <span style="color: var(--cma-blue)">ARRIVED AT DESTINATION HUB</span></p>
+            </div>
+            <div class="badge-status">IN TRANSIT</div>
+        </div>
+
+        <div class="details-grid">
+            <div class="info-box">
+                <h3><i class="fa-solid fa-user-tie"></i> Sender Information</h3>
+                <p><span>Full Name:</span> <b>Seong Min</b></p>
+                <p><span>Address:</span> <b>London, UK</b></p>
+                <p><span>Contact No:</span> <b>+44708 331 9890</b></p>
+                <p><span>Service:</span> <b>Priority Express Air</b></p>
+            </div>
+
+            <div class="info-box">
+                <h3><i class="fa-solid fa-house-chimney"></i> Receiver Information</h3>
+                <p><span>Full Name:</span> <b>Filipina Candelaria Mujar</b></p>
+                <p><span>Delivery Address:</span> <b>Crissa Mae mujar purok 3 matain subic zambales</b></p>
+                <p><span>Country:</span> <b>Philippines</b></p>
+                <p><span>Contact No:</span> <b>+63 915 882 9956</b></p>
+            </div>
+
+            <div class="info-box">
+                <h3><i class="fa-solid fa-box-archive"></i> Package Specifications</h3>
+                <p><span>Gross Weight:</span> <b>12.50 KG</b></p>
+                <p><span>Contents:</span> <b>Personal Goods & Documents</b></p>
+                <p><span>Estimated Delivery:</span> <b style="color: var(--cma-red)">March 09, 2026</b></p>
+                <p><span>Flight:</span> <b>CMA-AIR-992</b></p>
+            </div>
+
+            <div class="info-box" style="background: var(--cma-dark); color: white;">
+                <h3 style="color: var(--white); border-color: rgba(255,255,255,0.1)"><i class="fa-solid fa-file-invoice-dollar"></i> Shipping Details</h3>
+                <p><span>Freight:</span> <span style="color: var(--); font-weight:700;">UK (SENDER)</span></p>
+                <p><span>Insurance:</span> <span style="color: var(--success); font-weight:700;">Pending</span></p>
+                <p><span>Status:</span> <span style="color: var(--success); font-weight:700;">PROCESSED</span></p>
+                <hr style="margin: 15px 0; opacity: 0.1;">
+                <p style="font-size: 18px;">Tracking Code: <span>CMA789PH</span></p>
+            </div>
+        </div>
+
+        <h2 style="font-family: Montserrat; font-size: 20px; margin-bottom: 20px; color: var(--cma-blue); text-transform: uppercase;">Transit Route: MNL -> SUBIC</h2>
+        <div class="map-wrapper">
+            <div class="map-overlay-info">
+                <strong>Route:</strong> Ninoy Aquino Intl Airport (MNL) ➔ Whiterock Beach Hotel, Subic<br>
+                <strong>Distance:</strong> ~135 KM<br>
+                <strong>Est. Time:</strong> 2h 45m (via SCTEX)
+            </div>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d493976.2238478442!2d120.35406561144415!3d14.701968532470726!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e0!4m5!1s0x3397c921319c59f3%3A0x6b00995179a9f24!2sNinoy%20Aquino%20International%20Airport%2C%20Pasay%2C%20Metro%20Manila%2C%20Philippines!3m2!1d14.5082539!2d121.0194209!4m5!1s0x339670f907612f0b%3A0x956637e72b43b67e!2sWhiterock%20Beach%20Hotel%20%26%20Waterpark%2C%20Mojica%20Street%2C%20Subic%2C%20Zambales%2C%20Philippines!3m2!1d14.8459419!2d120.245892!5e0!3m2!1sen!2s!4v1700000000000" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+
+        <h2 style="font-family: Montserrat; font-size: 20px; margin: 40px 0 20px; color: var(--cma-blue); text-transform: uppercase;">Shipment History</h2>
+        <div class="timeline">
+            <div class="step active">
+                <div class="step-content">
+                    <p style="font-size:12px; font-weight:800; color:var(--cma-red)">CURRENT STEP</p>
+                    <p style="font-weight:800; color:var(--cma-blue); font-size: 18px;">ARRIVED AT TERMINAL - PROCESSING</p>
+                    <p style="font-size: 14px; margin-top:5px;">Ninoy Aquino International Airport (MNL). Sorting for final delivery to Zambales.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-content">
+                    <p style="font-size:12px; font-weight:800; color:var(--grey)">10 MAR 2026 | 02:15 AM</p>
+                    <p style="font-weight:800; color:var(--cma-blue);">DEPARTED TRANSIT HUB</p>
+                    <p style="font-size: 14px;">International Flight - In Transit to Philippines.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-content">
+                    <p style="font-size:12px; font-weight:800; color:var(--grey)">09 MAR 2026 | 10:00 AM</p>
+                    <p style="font-weight:800; color:var(--cma-blue);">PICKED UP FROM SENDER</p>
+                    <p style="font-size: 14px;">London, UK Hub. Initial inspection completed.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="vessel-tracking-module">
+        <div class="vessel-info">
+            <div class="vessel-visual"></div>
+            <div style="flex: 2;">
+                <h3 style="color: var(--cma-red); font-size: 24px;">CMA CGM EXCELLENCE</h3>
+                <p style="margin-top: 15px; opacity: 0.8;">Our global fleet provides the most reliable logistics network. We connect the Philippines to the rest of the world through our dedicated air and sea routes.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4 style="font-size: 24px; font-weight: 900;">CMA <span>CGM</span></h4>
+                <p>Global leader in shipping, land, air, and logistics solutions. Connecting the world through sustainable transport services.</p>
+            </div>
+            <div class="footer-col">
+                <h4>SUPPORT</h4>
+                <p><i class="fa-solid fa-clock"></i> <b>Schedule:</b> 24/7 Global Assistance</p>
+                <p><i class="fa-solid fa-map-pin"></i> <b>Headquarters:</b> Marseille, France</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 CMA CGM Group. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        function checkTrack() {
+            const code = document.getElementById('trackingID').value.trim().toUpperCase();
+            if (code === "CMA789PH") {
+                document.getElementById('home').style.display = 'none';
+                document.getElementById('tracking-result').classList.add('active-view');
+                window.scrollTo({top: 0, behavior: 'smooth'});
+            } else {
+                alert("Invalid Tracking Code. Please check and try again.");
+            }
+        }
+    </script>
+</body>
+</html>
